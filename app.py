@@ -13,7 +13,7 @@ app = Flask(__name__)
 # 1. CONFIGURATION
 # ==============================================================
 VERIFY_TOKEN = "money_honey_secret_123"
-WHATSAPP_TOKEN = "EAASR3GEvB40BQNk7kKoFMGzkpq1fFPBKaZCnC7YwFh5ZAQZCAG2WsTzR2zWK3xBxfx9ZBaQ98cpmzhTMBDknrKoOKnDy05V2itQXBLiPKKIZBjilKnW7AFWYPsB9tMBZAHZAPXxyiybaaZA4Sn6Ec9pN1u57KK2pm7YMyFwSTPipjWFWrnWZAehOvfCii2krg1CZBHZAPa7CEbbscot1GK9xOejtIU6sSWjVg2ZAAhXFZBF6S5NSF1lEcCvTAOQDoEkAJ4qa5mVzd4vGNmyZAdN7HeK0Xcw1IM"
+WHATSAPP_TOKEN = "EAASR3GEvB40BQBZB8l3c4rc8V1v8tNSqofKNpmcRN03ILoMGmbMrk83zhWYTXZAZCjZAdUDfVtDdL5A6XliSHZB4fIkeQeZBJVb4PQhltznUpj51ANOsosVFda5fEFoLaYpKfvttvtGLmIvyrQgB4E25ySgZBEUWxWMTMTIwuXvV12WbbSntgexMQR3PHXK1OdXjdbC7tOaJZBmCiA4UsXLGZCsNdlsJu0hkI2AIYYfUujrovJDpIZBGZB73uZBcvuIXjvQ6uxEo1DMy7Ng0ZBpZAIpWmPk8EF"
 PHONE_NUMBER_ID = "656313144223789"
 APP_SECRET = "b9584d1d66c875b7ce38978249dddcf9"
 
@@ -286,24 +286,34 @@ def verify_webhook():
     print("🔐 WEBHOOK VERIFICATION REQUEST RECEIVED")
     print("="*60)
     
+    # Parse params from the webhook verification request
     mode = request.args.get("hub.mode")
     token = request.args.get("hub.verify_token")
     challenge = request.args.get("hub.challenge")
     
     print(f"   Mode: {mode}")
     print(f"   Token Received: {token}")
-    print(f"   Token Expected: {VERIFY_TOKEN}")
+    print(f"   Token Expected: money_honey_secret_123")
     print(f"   Challenge: {challenge}")
     print("="*60)
-
-    if mode == "subscribe" and token == VERIFY_TOKEN:
-        print("✅ VERIFICATION SUCCESSFUL! Returning challenge.")
-        print("="*60 + "\n")
-        return challenge, 200
-    else:
-        print("❌ VERIFICATION FAILED! Token mismatch or wrong mode.")
-        print("="*60 + "\n")
-        return "Forbidden", 403
+    
+    # Check if a token and mode were sent
+    if mode and token:
+        # Check the mode and token sent are correct
+        if mode == "subscribe" and token == "money_honey_secret_123":
+            print("✅ WEBHOOK_VERIFIED")
+            print("="*60 + "\n")
+            # Return the challenge as a simple string with status 200
+            return str(challenge), 200
+        else:
+            # Responds with '403 Forbidden' if verify tokens do not match
+            print("❌ VERIFICATION_FAILED: Token mismatch")
+            print("="*60 + "\n")
+            return "Forbidden", 403
+    
+    print("❌ VERIFICATION_FAILED: Missing mode or token")
+    print("="*60 + "\n")
+    return "Bad Request", 400
 
 @app.route('/webhook', methods=['POST'])
 def handle_messages():
@@ -519,10 +529,12 @@ if __name__ == "__main__":
     print("   1. Start ngrok: ngrok http 3000")
     print("   2. Copy the https URL from ngrok")
     print("   3. Go to Meta Developer Dashboard")
-    print("   4. Set Callback URL: https://YOUR_NGROK_URL/webhook")
-    print("   5. Set Verify Token: money_honey_secret_123")
-    print("   6. Subscribe to 'messages' webhook field")
-    print("   7. Send 'Hi' from WhatsApp to test!")
+    print("   4. WhatsApp → Configuration → Edit Webhook")
+    print("   5. Set Callback URL: https://YOUR_NGROK_URL/webhook")
+    print("   6. Set Verify Token: money_honey_secret_123")
+    print("   7. Click Verify and Save")
+    print("   8. Subscribe to 'messages' webhook field")
+    print("   9. Send 'Hi' from WhatsApp to test!")
     print("="*60 + "\n")
     
     app.run(debug=True, port=3000, use_reloader=False)

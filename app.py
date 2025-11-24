@@ -13,7 +13,7 @@ app = Flask(__name__)
 # 1. CONFIGURATION
 # ==============================================================
 VERIFY_TOKEN = "money_honey_secret_123"
-WHATSAPP_TOKEN = "EAASR3GEvB40BQF3OGA1fIF9PJ0yWhrYCm9YO22t2tZBGKrPYj2clVljJiGmoBIJKbGUmisTRN2zJbmZAfegZB1bP9WyiuMLtUkbArtpclGTLRk0rrnxHWfltZAH76sMJWwte9PJyg13zRg8t7sUtSZCcQMbY4TTEjKgZBJRvJQDdt5B8KBkrrxKkZCOsMWm4VZBo9f1eo0Q4YZAJVkEKR1SoZAzqs1608YYPwxdmcwm1WHlbrLU7ZCzWqqLefJn3N2p5OpsmIv5QnH8lqBFkgxyRuHUkTWBWQZDZD"
+WHATSAPP_TOKEN = "EAASR3GEvB40BQJMY96Uk8ecF5NURXxd1FOzhHfRedja7kKdHJnf0tGsPBF0YQpCoX7DHzfmJbTZADXuRerSLSwZCTXgA88xJa7bwEOYvZBWKwMneEqCByhZCLLTWRr0PYkG58jxCftW0LkTpkL7GfixXaj2aON86JJ4BNqTZBekNyN78pd3xsTmOZAS6EXrCzSqSwota1q8asqAUS7ZBfZBCwPafVvKTZCAEzhHjyRPq3uPmmH8QZALvZBVZA7jcQnZCo5kFqtECf1he5xkeGZBQOaXRR3kcNS8gZDZD"
 PHONE_NUMBER_ID = "656313144223789"
 APP_SECRET = "b9584d1d66c875b7ce38978249dddcf9"
 
@@ -538,4 +538,5 @@ if __name__ == "__main__":
     print("="*60 + "\n")
     
     app.run(debug=True, port=3000, use_reloader=False)
+
 
